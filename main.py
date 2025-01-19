@@ -1,5 +1,8 @@
 import logging
+from dataclasses import dataclass
 from math import cos, sin, pi
+from queue import Queue, LifoQueue
+from typing import Any
 
 from numpy import arctan2
 
@@ -53,7 +56,16 @@ class Speaker:
         logging.info(f"Message played over the speaker: {message}")
         return
 
+
+@dataclass
+class Command:
+    kwargs: dict[str, Any]
+    operation: str
+
+
 class Robot:
+    command_queue = Queue()
+    command_stack = LifoQueue()
     facing_direction: float
     position: tuple[float, float]
 
@@ -63,6 +75,15 @@ class Robot:
         self.left_leg = Leg(robot=self)
         self.right_leg = Leg(robot=self)
         self.speaker = Speaker()
+
+    def run(self) -> None:
+        while True:
+            while not self.command_stack.empty():
+                command = self.command_stack.get()
+                self._execute(command=command)
+            while not self.command_queue.empty():
+                command = self.command_queue.get()
+                self._execute(command=command)
 
     def _is_at(self, location: tuple[float, float]) -> bool:
         # The robot is defined to be at location if the distance between
@@ -118,3 +139,7 @@ class Robot:
 
     def speak(self, message: str) -> None:
         self.speaker.speak(message=message)
+
+    def _execute(self, command: Command) -> None:
+        method = getattr(self, command.operation)
+        method(**command.kwargs)
