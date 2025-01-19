@@ -45,6 +45,14 @@ class Leg:
         )
 
 
+class Speaker:
+
+    def speak(self, message: str) -> None:
+        # In a real-world scenario we would convert the text to a speech audio
+        # file and send an instruction to the speaker play the audio file.
+        logging.info(f"Message played over the speaker: {message}")
+        return
+
 class Robot:
     facing_direction: float
     position: tuple[float, float]
@@ -54,6 +62,7 @@ class Robot:
         self.position = (0.0, 0.0)
         self.left_leg = Leg(robot=self)
         self.right_leg = Leg(robot=self)
+        self.speaker = Speaker()
 
     def _is_at(self, location: tuple[float, float]) -> bool:
         # The robot is defined to be at location if the distance between
@@ -106,3 +115,6 @@ class Robot:
         self._position_hands_for_grasp()
         self._grasp()
         self._bend_knees(angle=pi)  # Straighten legs
+
+    def speak(self, message: str) -> None:
+        self.speaker.speak(message=message)
