@@ -64,12 +64,14 @@ class Command:
 
 
 class Robot:
-    command_queue = Queue()
-    command_stack = LifoQueue()
+    command_queue: Queue
+    command_stack: LifoQueue
     facing_direction: float
     position: tuple[float, float]
 
     def __init__(self) -> None:
+        self.command_queue = Queue()
+        self.command_stack = LifoQueue()
         self.facing_direction = 0.0
         self.position = (0.0, 0.0)
         self.left_leg = Leg(robot=self)
