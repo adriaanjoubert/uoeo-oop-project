@@ -39,6 +39,8 @@ The Robot class keeps track of its internal state through the attributes `facing
 
 The application illustrates a stack and a queue. The user can add commands to the stack and queue and execute all the commands. Commands on the stack are executed first and then commands in the queue are executed.
 
+The project includes unit tests which uses mocks and asserts to confirm the expected function calls when running the application.
+
 The project conforms to the PEP8 style guideline (Alchin, 2010). This can be confirmed by executing the command `flake8` inside the virtual environment and observing that no errors are returned.
 
 # References
