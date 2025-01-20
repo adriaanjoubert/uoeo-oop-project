@@ -103,6 +103,7 @@ class Robot:
             print("1. Add command to stack")
             print("2. Add command to queue")
             print("3. Execute commands")
+            print("4. Exit")
             match input():
                 case "1":
                     print("Enter command to add to stack")
@@ -115,16 +116,18 @@ class Robot:
                     self.command_queue.put(command)
                     print("Command added to queue")
                 case "3":
-                    break
+                    pass
+                case "4":
+                    return
 
-        while not self.command_stack.empty():
-            command = self.command_stack.get()
-            self._execute(command=command)
-        while not self.command_queue.empty():
-            command = self.command_queue.get()
-            self._execute(command=command)
+            while not self.command_stack.empty():
+                command = self.command_stack.get()
+                self._execute(command=command)
+            while not self.command_queue.empty():
+                command = self.command_queue.get()
+                self._execute(command=command)
 
-        logging.info("All commands executed")
+            logging.info("All commands executed")
 
     def _is_at(self, location: tuple[float, float]) -> bool:
         # The robot is defined to be at location if the distance between
