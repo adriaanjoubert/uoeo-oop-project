@@ -177,6 +177,7 @@ class Robot:
         self._position_hands_for_grasp()
         self._grasp()
         self._bend_knees(angle=pi)  # Straighten legs
+        logging.info(f"Object at {object_location} has been lifted")
 
     def speak(self, message: str) -> None:
         self.speaker.speak(message=message)
