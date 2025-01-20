@@ -33,7 +33,10 @@ class Leg:
         self.robot = robot
 
     def step(self, destination: tuple[float, float]) -> None:
-        distance_from_destination = distance_between(self.robot.position, destination)
+        distance_from_destination = distance_between(
+            self.robot.position,
+            destination,
+        )
         if distance_from_destination < ROBOT_STEP_SIZE:
             distance_to_move = distance_from_destination
         else:
@@ -43,8 +46,10 @@ class Leg:
         # to move in a certain way to accomplish a step motion. Here we just
         # update the robot's position.
         self.robot.position = (
-            self.robot.position[0] + distance_to_move * cos(self.robot.facing_direction),
-            self.robot.position[1] + distance_to_move * sin(self.robot.facing_direction),
+            self.robot.position[0]
+            + distance_to_move * cos(self.robot.facing_direction),
+            self.robot.position[1]
+            + distance_to_move * sin(self.robot.facing_direction),
         )
 
 
@@ -87,11 +92,17 @@ class Robot:
             case "1":
                 print("Enter destination in the format x,y, e.g. 1,2")
                 x, y = input().split(",")
-                return Command(kwargs={"destination": (float(x), float(y))}, operation="move")
+                return Command(
+                    kwargs={"destination": (float(x), float(y))},
+                    operation="move",
+                )
             case "2":
                 print("Enter object location in the format x,y, e.g. 1,2")
                 x, y = input().split(",")
-                return Command(kwargs={"object_location": (float(x), float(y))}, operation="lift")
+                return Command(
+                    kwargs={"object_location": (float(x), float(y))},
+                    operation="lift",
+                )
             case "3":
                 print("Enter message to speak")
                 message = input()
@@ -136,7 +147,10 @@ class Robot:
 
     def turn(self, destination: tuple[float, float]) -> None:
         logging.info(f"Turning towards {destination}")
-        angle = arctan2(destination[1] - self.position[1], destination[0] - self.position[0])
+        angle = arctan2(
+            destination[1] - self.position[1],
+            destination[0] - self.position[0],
+        )
         self.facing_direction = angle
         logging.info(f"Now facing {angle}")
 
