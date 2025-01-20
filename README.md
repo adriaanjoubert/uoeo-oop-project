@@ -29,6 +29,16 @@ To run the unit tests using `pytest`, run the following command in the terminal:
 pytest tests.py --log-cli-level INFO
 ```
 
+## Commentary
+
+The robot is "turned on" by starting the application and "shut down" by choosing the exit option in the main menu.
+
+The application illustrates dependency by having the Robot class depend on other helper classes, such as Leg and Speaker, with their own, unique methods.
+
+The Robot class keeps track of its internal state through the attributes `facing_direction` and `position` as well as the stack and queue where it stores commands to be executed.
+
+The application illustrates a stack and a queue. The user can add commands to the stack and queue and execute all the commands. Commands on the stack are executed first and then commands in the queue are executed.
+
 # References
 
 Stewart, J. and Kokoska, S. (2023) Calculus: Concepts and Contexts. 5th edn. Boston: Cengage.
