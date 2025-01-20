@@ -39,6 +39,10 @@ The Robot class keeps track of its internal state through the attributes `facing
 
 The application illustrates a stack and a queue. The user can add commands to the stack and queue and execute all the commands. Commands on the stack are executed first and then commands in the queue are executed.
 
+The project conforms to the PEP8 style guideline (Alchin, 2010). This can be confirmed by executing the command `flake8` inside the virtual environment and observing that no errors are returned.
+
 # References
+
+Alchin, M. (2010) 'PEP 8 Style Guide for Python', in: Alchin, M. Pro Python. United States: Apress L. P.
 
 Stewart, J. and Kokoska, S. (2023) Calculus: Concepts and Contexts. 5th edn. Boston: Cengage.
