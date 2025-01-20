@@ -78,14 +78,53 @@ class Robot:
         self.right_leg = Leg(robot=self)
         self.speaker = Speaker()
 
+    def _collect_command(self) -> Command:
+        print("Available commands:")
+        print("1. Move")
+        print("2. Lift")
+        print("3. Speak")
+        match input():
+            case "1":
+                print("Enter destination in the format x,y, e.g. 1,2")
+                x, y = input().split(",")
+                return Command(kwargs={"destination": (float(x), float(y))}, operation="move")
+            case "2":
+                print("Enter object location in the format x,y, e.g. 1,2")
+                x, y = input().split(",")
+                return Command(kwargs={"object_location": (float(x), float(y))}, operation="lift")
+            case "3":
+                print("Enter message to speak")
+                message = input()
+                return Command(kwargs={"message": message}, operation="speak")
+
     def run(self) -> None:
         while True:
-            while not self.command_stack.empty():
-                command = self.command_stack.get()
-                self._execute(command=command)
-            while not self.command_queue.empty():
-                command = self.command_queue.get()
-                self._execute(command=command)
+            print("Main menu")
+            print("1. Add command to stack")
+            print("2. Add command to queue")
+            print("3. Execute commands")
+            match input():
+                case "1":
+                    print("Enter command to add to stack")
+                    command = self._collect_command()
+                    self.command_stack.put(command)
+                    print("Command added to stack")
+                case "2":
+                    print("Enter command to add to queue")
+                    command = self._collect_command()
+                    self.command_queue.put(command)
+                    print("Command added to queue")
+                case "3":
+                    break
+
+        while not self.command_stack.empty():
+            command = self.command_stack.get()
+            self._execute(command=command)
+        while not self.command_queue.empty():
+            command = self.command_queue.get()
+            self._execute(command=command)
+
+        logging.info("All commands executed")
 
     def _is_at(self, location: tuple[float, float]) -> bool:
         # The robot is defined to be at location if the distance between
@@ -145,3 +184,9 @@ class Robot:
     def _execute(self, command: Command) -> None:
         method = getattr(self, command.operation)
         method(**command.kwargs)
+
+
+if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+    robot = Robot()
+    robot.run()
